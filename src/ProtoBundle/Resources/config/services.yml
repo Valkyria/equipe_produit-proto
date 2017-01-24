@@ -1,0 +1,4 @@
+services:
+#    proto.example:
+#        class: ProtoBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
