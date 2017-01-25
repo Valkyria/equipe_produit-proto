@@ -1,3 +1,8 @@
 proto_homepage:
     path:     /
     defaults: { _controller: ProtoBundle:Home:index }
+
+proto_messenger:
+    path:     /messenger
+    defaults: { _controller: ProtoBundle:Home:messenger }
+    

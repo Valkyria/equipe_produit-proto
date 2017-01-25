@@ -10,4 +10,8 @@ class HomeController extends Controller
     {
         return $this->render('ProtoBundle:Home:index.html.twig');
     }
+    public function messengerAction()
+    {
+    	return $this->render('ProtoBundle:Home:messenger.html.twig');
+    }
 }
