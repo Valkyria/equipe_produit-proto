@@ -5,4 +5,7 @@ proto_homepage:
 proto_messenger:
     path:     /messenger
     defaults: { _controller: ProtoBundle:Home:messenger }
-    
+
+new_user:
+    path:     /new_user
+    defaults: { _controller: ProtoBundle:Home:user_creation }

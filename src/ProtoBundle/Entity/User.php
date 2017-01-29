@@ -57,6 +57,13 @@ class User
     private $id;
 
 
+    public function newUser($mail, $nom, $prenom, $psedo, $pass){
+    	$this->id = $mail;
+    	$this->userfamilyname = $nom;
+    	$this->username = $prenom;
+    	$this->displayname = $psedo;
+    	$this->password = $pass;
+    }
 
     /**
      * Set username
