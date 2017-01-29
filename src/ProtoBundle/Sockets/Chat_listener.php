@@ -7,7 +7,7 @@ namespace ProtoBundle\Sockets;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 
-class Chat implements MessageComponentInterface {
+class Chat_listener implements MessageComponentInterface {
     protected $clients;
 
     public function __construct() {

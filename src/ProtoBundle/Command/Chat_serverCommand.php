@@ -1,6 +1,7 @@
 <?php
 // myapplication/src/sandboxBundle/Command/SocketCommand.php
 // Change the namespace according to your bundle
+//php bin/console sockets:start-chat
 namespace ProtoBundle\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -10,9 +11,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 // Ratchet libs
 use Ratchet\App;
 // Chat instance
-use ProtoBundle\Sockets\Chat;
+use ProtoBundle\Sockets\Chat_listener;
 
-class SocketCommand extends Command
+class Chat_serverCommand extends Command
 {
 	protected function configure()
 	{
@@ -40,7 +41,7 @@ class SocketCommand extends Command
 		// Domain as first parameter
 		$app = new App('127.0.0.1', 8080,'0.0.0.0');
 		// Add route to chat with the handler as second parameter
-		$app->route('/chat', new Chat);
+		$app->route('/chat', new Chat_listener);
 
 		// To add another routes, then you can use :
 		//$app->route('/america-chat', new AmericaChat);
