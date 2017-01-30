@@ -1,8 +1,8 @@
  // This object will be sent everytime you submit a message in the sendMessage function.
-    var clientInformation = {
+    /*var clientInformation = {
         username: new Date().getTime().toString()
         // You can add more information in a static object
-    };
+    };*/
     
     // START SOCKET CONFIG
     /**
@@ -10,7 +10,7 @@
      * According to the configuration in Sockets/Chat.php , change the port if you need to.
      * @type WebSocket
      */
-    var conn = new WebSocket('ws://127.0.0.1:8080/chat');
+    //var conn = new WebSocket('ws://127.0.0.1:8080/2');
 
     conn.onopen = function(e) {
         console.info("Connection established succesfully");

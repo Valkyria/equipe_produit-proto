@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Lun 30 Janvier 2017 à 16:04
+-- Généré le :  Lun 30 Janvier 2017 à 23:54
 -- Version du serveur :  5.7.11
 -- Version de PHP :  7.0.4
 
@@ -54,6 +54,16 @@ CREATE TABLE `friends` (
   `id` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Contenu de la table `friends`
+--
+
+INSERT INTO `friends` (`fk_user`, `fk_friend`, `id`) VALUES
+('nat@mail.com', 'ralph@mail.com', 1),
+('Tran@mail', 'User_test1@mail', 5),
+('nat@mail.com', 'Tran@mail', 4),
+('Tran@mail', 'User_test2@mail', 6);
+
 -- --------------------------------------------------------
 
 --
@@ -97,7 +107,12 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `displayname`, `avatar`, `password`, `userfamilyname`) VALUES
-('Tran@mail', 'Cedric', 'Warlaine', NULL, '0000', 'Tran');
+('Tran@mail', 'Cedric', 'Warlaine', 'https://static.independent.co.uk/s3fs-public/thumbnails/image/2015/05/07/16/Leo-DiCaprio.jpg', '0000', 'Tran'),
+('', 'Natacha', 'Natacha', 'http://tatouagefemme.eu/wp-content/uploads/2016/04/dessin-tattoo-feminin-portrait-avec-rose-tremiere.jpg', '0000', 'Tatou'),
+('nat@mail.com', 'Natacha', 'Natacha', 'http://tatouagefemme.eu/wp-content/uploads/2016/04/dessin-tattoo-feminin-portrait-avec-rose-tremiere.jpg', '0000', 'Tatou'),
+('ralph@mail.com', 'Ralph', 'Ralph', 'http://jonasdiop.com/wp-content/uploads/2016/08/Jonas-Diop-ask-the-expert.jpeg', '0000', 'ProCoder'),
+('User_test1@mail', 'User_test1', 'User_test1', 'https://collectifenjeu.fr/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png', 'User_test1', 'User_test1'),
+('User_test2@mail', 'User_test2', 'User_test2', 'https://collectifenjeu.fr/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png', 'User_test2', 'User_test2');
 
 --
 -- Index pour les tables exportées
@@ -144,7 +159,7 @@ ALTER TABLE `conversation`
 -- AUTO_INCREMENT pour la table `friends`
 --
 ALTER TABLE `friends`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT pour la table `message`
 --

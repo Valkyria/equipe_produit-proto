@@ -6,7 +6,9 @@
 
 namespace ProtoBundle\Command;
 
-use Symfony\Component\Console\Command\Command;
+//use Symfony\Component\Console\Command\Command;
+
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -15,7 +17,7 @@ use Ratchet\App;
 // Chat instance
 use ProtoBundle\Sockets\Chat_listener;
 
-class Chat_serverCommand extends Command
+class Chat_serverCommand extends ContainerAwareCommand
 {
 	protected function configure()
 	{
@@ -42,9 +44,15 @@ class Chat_serverCommand extends Command
 		// $app = new \Ratchet\App('sandbox', 8080,'0.0.0.0');
 		// Domain as first parameter
 		$app = new App('127.0.0.1', 8080,'0.0.0.0');
-		// Add route to chat with the handler as second parameter
-		$app->route('/chat', new Chat_listener);
-
+		// Add route for each conv
+		
+		$this->em = $this->getContainer()->get('doctrine')->getManager();
+		
+		$conversations = $this->em->getRepository('ProtoBundle:Conversation')->findAll();
+		foreach($conversations as $conversation){
+			$app->route('/'.$conversation->getId(), new Chat_listener);
+			$output->writeln(['adding: "/'.$conversation->getId().'" to routes',]);
+		}
 		// To add another routes, then you can use :
 		//$app->route('/america-chat', new AmericaChat);
 		//$app->route('/europe-chat', new EuropeChat);
