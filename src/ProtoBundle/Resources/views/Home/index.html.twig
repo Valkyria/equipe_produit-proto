@@ -11,7 +11,7 @@
 			</div>
 			<div id="friends_list">
 				{% for friend in friends %}
-					<div class="row" style="cursor: pointer;" onclick="window.location='http://google.com';">
+					<div class="row" style="cursor: pointer;" onclick="window.location='{{ friend.friend_link}}';">
 	        			<div>
 	        				<div class="col-md-4"><img class="user_avatar" src={{ friend.friend_avatar}} > </div>
 	        				<div class="col-md-8">
@@ -28,7 +28,7 @@
     	 <div class="col-md-9" id="conv_container">
     	 	<h2>Conversations recentes</h2> <hr />
 			{% for conversation in conversations %}
-				<div class="row" style="cursor: pointer;" onclick="window.location='http://google.com';">
+				<div class="row" style="cursor: pointer;" onclick="window.location='{{ conversation.conv_link}}';">
 					<div id="conv_header">{{ conversation.conv_title }}</div>
         			<div>
         				<div class="col-md-2"><img class="user_avatar" src={{ conversation.sender_avatar}} > </div>

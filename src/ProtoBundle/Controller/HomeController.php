@@ -60,12 +60,13 @@ class HomeController extends Controller
     				$date = $date_msg;
     				$user = $this->em->getRepository('ProtoBundle:User')->findOneById($message->getFkUser());
     				$conversations[$key]['conv_id']= $conversation['id'];
+    				$conversations[$key]['conv_link']= $conversation['id'];
     				$conversations[$key]['conv_title']= $conversation['title'];
     				$conversations[$key]['conv_color']= $conversation['color'];
     				$conversations[$key]['sender_name']= $user->getDisplayname();
     				$conversations[$key]['sender_avatar']= $user->getAvatar();
     				$conversations[$key]['msg_content']= $message->getContent();
-    				$conversations[$key]['msg_date']= $message->getDatetime()->format('d-m-Y H:i:s');;
+    				$conversations[$key]['msg_date']= $message->getDatetime()->format('d-m-Y H:i:s');
     			}
     		}
     	}
@@ -73,6 +74,7 @@ class HomeController extends Controller
     	$friends_array = $this->friends->getFriendsList($this->em, $this->session->get('mail'));
     	foreach ($friends_array as $friend_id){
     		$friend = $this->em->getRepository('ProtoBundle:User')->findOneById($friend_id);
+    		$friends[$friend_id]['friend_link']=$friend->getId();
     		$friends[$friend_id]['friend_mail']=$friend->getId();
     		$friends[$friend_id]['friend_username']=$friend->getUsername();
     		$friends[$friend_id]['friend_firstname']=$friend->getUserfamilyname();
