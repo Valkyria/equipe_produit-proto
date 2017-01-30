@@ -36,7 +36,14 @@ class Friends
     private $id;
 
 
-
+    public function newFriends($user1, $user2)
+    {
+    	$this->fkUser = $user1;
+    	$this->FkFriend = $user2;
+    	
+    	return $this;
+    }
+    
     /**
      * Set fkUser
      *

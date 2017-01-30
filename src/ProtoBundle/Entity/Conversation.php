@@ -35,7 +35,13 @@ class Conversation
      */
     private $id;
 
-
+	
+    public function newConversation($name,$color){
+    	$this->name = $name;
+    	$this->color = $color;
+    	 
+    	return $this;
+    }
 
     /**
      * Set name

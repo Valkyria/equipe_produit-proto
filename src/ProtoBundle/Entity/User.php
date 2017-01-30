@@ -63,6 +63,8 @@ class User
     	$this->username = $prenom;
     	$this->displayname = $psedo;
     	$this->password = $pass;
+    	
+    	return $this;
     }
 
     /**

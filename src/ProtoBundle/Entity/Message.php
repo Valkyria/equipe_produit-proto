@@ -50,6 +50,14 @@ class Message
     private $id;
 
 
+    public function sendMessage($user,$conversation,$content,$date){
+    	$this->fkUser = $user;
+    	$this->fkConversation = $conversation;
+    	$this->content = $content;
+    	$this->datetime = $date;
+    	
+    	return $this;
+    }
 
     /**
      * Set fkUser
@@ -108,7 +116,6 @@ class Message
      */
     public function setContent($content)
     {
-        $this->content = $content;
 
         return $this;
     }
