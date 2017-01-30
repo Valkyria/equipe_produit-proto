@@ -80,8 +80,8 @@ code {
 	margin-top:0px
 }
 .user_avatar{
-	max-width: 150px;
-	max-height: 150px;
+	max-width: 180px;
+	max-height: 180px;
 }
 
 /*______________________________________________________________________________
@@ -119,8 +119,12 @@ ________________________________________________________________________________
 #home_container{
 	margin-top:100px;
 }
-#friends_list{
+#friends_list .row{
 	margin-top:10px;
+}
+#friends_list img{
+	max-width: 100px;
+	max-height: 100px;
 }
 /*____________________________________________________________________________
    _____ _           _     _____                 
