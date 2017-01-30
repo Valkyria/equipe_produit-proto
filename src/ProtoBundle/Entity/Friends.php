@@ -101,4 +101,32 @@ class Friends
     {
         return $this->id;
     }
+    
+    //return a list of friends'ids (string)
+    public function getFriendsList($em, $user) {
+    	$friends = array();
+    	$qb = $em->getRepository('ProtoBundle:Friends')->createQueryBuilder('cm');
+    	$qb
+    	->select('cm')
+    	->where($qb->expr()->orX(
+    			$qb->expr()->eq('cm.fkUser', ':fkUser'),
+    			$qb->expr()->eq('cm.fkFriend', ':fkFriend')
+    			))
+    			->setParameter('fkUser', $user)
+    			->setParameter('fkFriend', $user)
+    			;
+    	$friends_array = $qb->getQuery()->getResult();
+    	
+    	foreach($friends_array as $friend){
+    		$user1=$friend->getFkUser();
+    		$user2=$friend->getFkFriend();
+    		if($user1 != $user){
+    			 $friends[]=$user1;
+    		}
+    		if($user2 != $user){
+    			$friends[]=$user2;
+    		}
+    	}
+    	return $friends;
+    }
 }

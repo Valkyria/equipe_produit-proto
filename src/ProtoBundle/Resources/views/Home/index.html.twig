@@ -1,14 +1,47 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 	{% include 'Elements/top_bar.html.twig' %}
+	<div class="row" id="home_container">
 	
-	<table>
-		{% for conversation in conversations %}
-        		<tr>
-        			<td>title: {{ conversation.conv_title }}</td>
-        			<td>sender: {{ conversation.msg_sender}}</td>
-        		</tr>
-    	{% endfor %}
-	</table>
-	{{ app.session.get('mail') }}
+		<div class="col-md-3">
+			<h2>Contacts</h2> <hr />
+			<div id="search_bar">
+				<input type="text" name="Rechercher">
+  			 	<input type="button" value="Submit">
+			</div>
+			<div id="friends_list">
+				{% for friend in friends %}
+					<div class="row" style="cursor: pointer;" onclick="window.location='http://google.com';">
+	        			<div>
+	        				<div class="col-md-4"><img class="user_avatar" src={{ friend.friend_avatar}} > </div>
+	        				<div class="col-md-8">
+	        					<h4>{{ friend.friend_psedo}}</h4>
+	        					<h5>{{ friend.friend_username}}</h5>
+	        					<h5>{{ friend.friend_firstname}}</h5>
+	        				</div>
+	        			</div>
+	        		</div>
+    			{% endfor %}
+			</div>
+		</div>
+		
+    	 <div class="col-md-9" id="conv_container">
+    	 	<h2>Conversations recentes</h2> <hr />
+			{% for conversation in conversations %}
+				<div class="row" style="cursor: pointer;" onclick="window.location='http://google.com';">
+					<div id="conv_header">{{ conversation.conv_title }}</div>
+        			<div>
+        				<div class="col-md-2"><img class="user_avatar" src={{ conversation.sender_avatar}} > </div>
+        				<div class="col-md-10">
+        					<h3>{{ conversation.sender_name}}</h3>
+        					<h4>{{ conversation.msg_content}}</h4>
+        					<h5>{{ conversation.msg_date}}</h5>
+        				</div>
+        			</div>
+        		</div>
+    		{% endfor %}
+    	</div>
+    	
+    </div>
+	{# app.session.get('mail') #}
 {% endblock %}

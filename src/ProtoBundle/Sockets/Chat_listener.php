@@ -9,7 +9,8 @@ use Ratchet\ConnectionInterface;
 
 class Chat_listener implements MessageComponentInterface {
     protected $clients;
-
+	protected $room;
+	
     public function __construct() {
         $this->clients = new \SplObjectStorage;
     }

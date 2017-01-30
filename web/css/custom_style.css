@@ -74,9 +74,14 @@ code {
         .sf-toolbar { opacity: 0; -webkit-animation: fade-in 1s .2s forwards; animation: fade-in 1s .2s forwards;}
 }
 
-#header{
+#menu{
 	background-color:black;
 	height: 80px;
+	margin-top:0px
+}
+.user_avatar{
+	max-width: 150px;
+	max-height: 150px;
 }
 
 /*______________________________________________________________________________
@@ -97,6 +102,25 @@ ________________________________________________________________________________
 }
 .raw #titre-section{
 	text-align:right !important;
+}
+#conv_header{
+	text-align:center;
+	background-color:blue;
+	margin-top:10px;
+}
+#conv_container{
+	//margin-top:50px;
+}
+#search_bar{
+	//margin-top:100px;
+	text-align:center;
+	background-color:red;
+}
+#home_container{
+	margin-top:100px;
+}
+#friends_list{
+	margin-top:10px;
 }
 /*____________________________________________________________________________
    _____ _           _     _____                 

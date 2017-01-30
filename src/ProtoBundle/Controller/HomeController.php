@@ -40,6 +40,7 @@ class HomeController extends Controller
     	
     	//$conversations_array = array();
     	$conversations = array();
+    	$friends = array();
     	$messages_get = $this->em->getRepository('ProtoBundle:Message')->findByFkUser($this->session->get('mail'));
     	
     	foreach ($messages_get as $message){
@@ -57,20 +58,31 @@ class HomeController extends Controller
     			$date_msg = $message->getDatetime();
     			if($date_msg > $date){
     				$date = $date_msg;
+    				$user = $this->em->getRepository('ProtoBundle:User')->findOneById($message->getFkUser());
     				$conversations[$key]['conv_id']= $conversation['id'];
     				$conversations[$key]['conv_title']= $conversation['title'];
     				$conversations[$key]['conv_color']= $conversation['color'];
-    				$conversations[$key]['msg_sender']= $message->getFkUser();
+    				$conversations[$key]['sender_name']= $user->getDisplayname();
+    				$conversations[$key]['sender_avatar']= $user->getAvatar();
     				$conversations[$key]['msg_content']= $message->getContent();
-    				$conversations[$key]['msg_date']= $message->getDatetime();
+    				$conversations[$key]['msg_date']= $message->getDatetime()->format('d-m-Y H:i:s');;
     			}
     		}
     	}
     	
-    	//var_dump($conversations);
+    	$friends_array = $this->friends->getFriendsList($this->em, $this->session->get('mail'));
+    	foreach ($friends_array as $friend_id){
+    		$friend = $this->em->getRepository('ProtoBundle:User')->findOneById($friend_id);
+    		$friends[$friend_id]['friend_mail']=$friend->getId();
+    		$friends[$friend_id]['friend_username']=$friend->getUsername();
+    		$friends[$friend_id]['friend_firstname']=$friend->getUserfamilyname();
+    		$friends[$friend_id]['friend_psedo']=$friend->getDisplayname();
+    		$friends[$friend_id]['friend_avatar']=$friend->getAvatar();
+    	}
+		//print_r($friends);
     	
         return $this->render('ProtoBundle:Home:index.html.twig',
-    				array('conversations'=> $conversations)
+    				array('conversations'=> $conversations, 'friends' => $friends)
     			);
     }
     
