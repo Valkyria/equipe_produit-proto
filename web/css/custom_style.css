@@ -378,6 +378,7 @@ html, body {
 }
 #chat-list{
 	height: 500px;
+	margin-top:10px;
     //height: auto !important;
     //height: 100%;
     //margin: 0 auto -200px;

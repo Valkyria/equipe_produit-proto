@@ -2,9 +2,9 @@
 // myapplication/src/sandboxBundle/Command/SocketCommand.php
 // Change the namespace according to your bundle
 //php bin/console sockets:start-chat
-//http://ourcodeworld.com/articles/read/242/creating-an-agnostic-realtime-chat-with-php-using-sockets-in-symfony-3 
+
 namespace ProtoBundle\Command;
-//use Symfony\Component\Console\Command\Command;
+
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
