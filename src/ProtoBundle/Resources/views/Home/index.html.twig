@@ -7,14 +7,16 @@
 			<h2>Contacts</h2> <hr />
 			<div id="search_bar">
 				<input type="text" name="Rechercher">
-  			 	<input type="button" value="Submit">
+  			 	<button type="button" class="btn btn-default"> Rechercher </button>
 			</div>
-			<div id="friends_list">
+			
+			<div id="friends_list" class="scrollbar" >
+			
 				{% for friend in friends %}
-					<div class="row" style="cursor: pointer;" onclick="window.location='{{ friend.friend_link}}';">
+					<div class="row"  style="cursor: pointer;" onclick="window.open('{{ friend.friend_link}}', '_blank');">
 	        			<div>
 	        				<div class="col-md-4"><img class="user_avatar" src={{ friend.friend_avatar}} > </div>
-	        				<div class="col-md-8">
+	        				<div class="col-md-8" >
 	        					<h4>{{ friend.friend_psedo}}</h4>
 	        					<h5>{{ friend.friend_username}}</h5>
 	        					<h5>{{ friend.friend_firstname}}</h5>
@@ -25,11 +27,11 @@
 			</div>
 		</div>
 		
-    	 <div class="col-md-9" id="conv_container">
+    	 <div class="col-md-9" id="conv_container" class="scrollbar">
     	 	<h2>Conversations recentes</h2> <hr />
 			{% for conversation in conversations %}
-				<div class="row" style="cursor: pointer;" onclick="window.location='{{ conversation.conv_link}}';">
-					<div id="conv_header">{{ conversation.conv_title }}</div>
+				<div class="row" style="cursor: pointer;" onclick="window.open('{{ conversation.conv_link}}', '_blank');">
+					<div id="conv_header" >{{ conversation.conv_title }}</div>
         			<div>
         				<div class="col-md-2"><img class="user_avatar" src={{ conversation.sender_avatar}} > </div>
         				<div class="col-md-10">

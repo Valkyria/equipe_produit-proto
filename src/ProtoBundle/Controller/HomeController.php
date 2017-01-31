@@ -88,10 +88,12 @@ class HomeController extends Controller
     			);
     }
     
-    public function messengerAction()
+    public function messengerAction($conv_id = 1)
     {
     	
-    	return $this->render('ProtoBundle:Home:messenger.html.twig');
+    	return $this->render('ProtoBundle:Home:chat_test.html.twig',
+    			array('conversations'=> $conv_id)
+    			);
     }
     
     public function user_creationAction()
