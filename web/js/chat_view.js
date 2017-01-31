@@ -59,6 +59,7 @@
             var li = document.createElement("li");
             li.appendChild(document.createTextNode(from + " : "+ message));
             ul.appendChild(li);
+            //TODO push to DB
         },
         sendMessage: function(text){
             clientInformation.message = text;
