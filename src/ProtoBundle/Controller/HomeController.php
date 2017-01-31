@@ -99,7 +99,7 @@ class HomeController extends Controller
     	$conversation = $this->em->getRepository('ProtoBundle:Conversation')->findOneById($id_conv);
     	
     	return $this->render('ProtoBundle:Home:chat_view.html.twig',
-    			array('conv_id'=> $id_conv, 'conv_title'=>$conversation->getName(), 'user_id'=>$this->session->get('mail'), 'user_psedo'=>$this->session->get('psedo'))
+    			array('conv_id'=> $id_conv, 'conv_title'=>$conversation->getName(),'conv_color'=>$conversation->getColor(), 'user_id'=>$this->session->get('mail'), 'user_psedo'=>$this->session->get('psedo'))
     			);
     }
     
