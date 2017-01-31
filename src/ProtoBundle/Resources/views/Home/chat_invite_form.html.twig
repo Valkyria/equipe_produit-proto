@@ -4,7 +4,7 @@
 {# include 'Elements/top_bar.html.twig' #}
 <div class="raw" id="chat_container">
 	<div class="row" id="add_contact_conv">
-		<input type="button" id="inviter_boutton" value="Invite" onclick="window.open('{{ conv_inv_link}}','{{ conversation.conv_title}}','menubar=no, status=no, scrollbars=no, menubar=no, width=600, height=800');"/>
+		<input type="button" id="inviter_boutton" value="Invite" onclick="window.open('{{ friend.friend_invite}}');"/>
 	</div>
 	<div class="col-md-12 row" id="chat_message_container">
 		<div id="conv_header">{{ conv_title }}</div>

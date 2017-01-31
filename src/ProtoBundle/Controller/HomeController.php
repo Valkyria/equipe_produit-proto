@@ -4,6 +4,9 @@ namespace ProtoBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use ProtoBundle\Entity\User;
 use ProtoBundle\Entity\Conversation;
 use ProtoBundle\Entity\Message;
@@ -140,7 +143,7 @@ class HomeController extends Controller
     public function add_user_to_convAction($conv_id, $user_friend)
     {
     	$this->instantiate();
-    	$this->message->sendMessage($user_id,$conv_id,$message,new DateTime('now'));
+    	$this->message->sendMessage($user_friend,$conv_id,'invitation reçue',new DateTime('now'));
     	$this->em->persist($this->message);
     	$this->em->flush();
     	return new Response ();
@@ -163,5 +166,27 @@ class HomeController extends Controller
     	$metadata->setIdGenerator(new \Doctrine\ORM\Id\AssignedGenerator());
     	$this->em->flush();
     	return $this->render('ProtoBundle:Home:messenger.html.twig');
+    }
+    
+    //restart console
+    public function sendSpoolAction($messages = 10)
+    {
+    	$kernel = $this->get('kernel');
+    	$application = new Application($kernel);
+    	$application->setAutoExit(false);
+    
+    	$input = new ArrayInput(array(
+    			'command' => 'swiftmailer:spool:send',
+    			'--message-limit' => $messages,
+    	));
+    	// You can use NullOutput() if you don't need the output
+    	$output = new BufferedOutput();
+    	$application->run($input, $output);
+    
+    	// return the output, don't use if you used NullOutput()
+    	$content = $output->fetch();
+    
+    	// return new Response(""), if you used NullOutput()
+    	return new Response($content);
     }
 }
