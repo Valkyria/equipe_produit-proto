@@ -1,6 +1,6 @@
  // This object will be sent everytime you submit a message in the sendMessage function.
     /*var clientInformation = {
-        username: new Date().getTime().toString()
+        user_psedo: new Date().getTime().toString()
         // You can add more information in a static object
     };*/
     
@@ -18,7 +18,7 @@
 
     conn.onmessage = function(e) {
         var data = JSON.parse(e.data);
-        Chat.appendMessage(data.username, data.message);
+        Chat.appendMessage(data.user_psedo, data.message);
         
         console.log(data);
     };
@@ -45,13 +45,13 @@
     
     // Mini API to send a message with the socket and append a message in a UL element.
     var Chat = {
-        appendMessage: function(username,message){
+        appendMessage: function(user_psedo,message){
             var from;
             
-            if(username == clientInformation.username){
+            if(user_psedo == clientInformation.user_psedo){
                 from = "me";
             }else{
-                from = clientInformation.username;
+                from = user_psedo;
             }
             
             // Append List Item
@@ -65,6 +65,6 @@
             // Send info as JSON
             conn.send(JSON.stringify(clientInformation));
             // Add my own message to the list
-            this.appendMessage(clientInformation.username, clientInformation.message);
+            this.appendMessage(clientInformation.user_psedo, clientInformation.message);
         }
     };

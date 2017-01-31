@@ -20,10 +20,11 @@ class HomeController extends Controller
 		$this->message = new Message();
 		$this->friends = new Friends();
 		$this->session = $this->container->get('session');
-		//$this->session->invalidate();
+		$this->session->invalidate();
 		
 		if(!$this->session->isStarted() || !$this->session->get('mail')){
-			$user = $this->em->getRepository('ProtoBundle:User')->findOneByUsername("cedric");
+			$user = $this->em->getRepository('ProtoBundle:User')->findOneByUsername("Natacha");
+			//$user = $this->em->getRepository('ProtoBundle:User')->findOneByUsername("Cedric");
 			$this->session->start();
 			$this->session->set('mail', $user->getId());
 			$this->session->set('lastname', $user->getUserfamilyname());
@@ -90,9 +91,10 @@ class HomeController extends Controller
     
     public function messengerAction($conv_id = 1)
     {
+    	$this->instantiate();
     	
     	return $this->render('ProtoBundle:Home:chat_test.html.twig',
-    			array('conversations'=> $conv_id)
+    			array('conversations'=> $conv_id, 'user_id'=>$this->session->get('mail'), 'user_psedo'=>$this->session->get('psedo'))
     			);
     }
     

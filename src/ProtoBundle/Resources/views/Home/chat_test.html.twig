@@ -1,3 +1,4 @@
+<a>{{ user_psedo }} </a>
 <h1>Public chat</h1>
 	<ul id="chat-list"></ul>
 <hr>
@@ -7,7 +8,8 @@
 <script>
 var conn = new WebSocket('ws://127.0.0.1:8080/2');
 var clientInformation = {
-        username: "{{ app.session.get('psedo') }}"
+        user_id: "{{ user_id }}",
+        user_psedo: "{{ user_psedo }}"
         // You can add more information in a static object
     };
 </script>
