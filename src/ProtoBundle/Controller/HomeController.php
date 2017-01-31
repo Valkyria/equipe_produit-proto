@@ -23,8 +23,8 @@ class HomeController extends Controller
 		$this->session->invalidate();
 		
 		if(!$this->session->isStarted() || !$this->session->get('mail')){
-			$user = $this->em->getRepository('ProtoBundle:User')->findOneByUsername("Natacha");
-			//$user = $this->em->getRepository('ProtoBundle:User')->findOneByUsername("Cedric");
+			//$user = $this->em->getRepository('ProtoBundle:User')->findOneByUsername("Natacha");
+			$user = $this->em->getRepository('ProtoBundle:User')->findOneByUsername("Cedric");
 			$this->session->start();
 			$this->session->set('mail', $user->getId());
 			$this->session->set('lastname', $user->getUserfamilyname());
@@ -52,49 +52,54 @@ class HomeController extends Controller
     			$conversations_array[$message->getfkConversation()]['color']=$conversation->getColor();
     		}
     	}
-    	foreach ($conversations_array as $key=>$conversation){
-    		$messages_get = $this->em->getRepository('ProtoBundle:Message')->findByfkConversation($key);
-    		$date = new Datetime('1800-01-01 00:00:00');
-    		foreach ($messages_get as $message){
-    			$date_msg = $message->getDatetime();
-    			if($date_msg > $date){
-    				$date = $date_msg;
-    				$user = $this->em->getRepository('ProtoBundle:User')->findOneById($message->getFkUser());
-    				$conversations[$key]['conv_id']= $conversation['id'];
-    				$conversations[$key]['conv_link']= $conversation['id'];
-    				$conversations[$key]['conv_title']= $conversation['title'];
-    				$conversations[$key]['conv_color']= $conversation['color'];
-    				$conversations[$key]['sender_name']= $user->getDisplayname();
-    				$conversations[$key]['sender_avatar']= $user->getAvatar();
-    				$conversations[$key]['msg_content']= $message->getContent();
-    				$conversations[$key]['msg_date']= $message->getDatetime()->format('d-m-Y H:i:s');
+    	if(isset($conversations_array)){
+    		foreach ($conversations_array as $key=>$conversation){
+    			$messages_get = $this->em->getRepository('ProtoBundle:Message')->findByfkConversation($key);
+    			$date = new Datetime('1800-01-01 00:00:00');
+    			foreach ($messages_get as $message){
+    				$date_msg = $message->getDatetime();
+    				if($date_msg > $date){
+    					$date = $date_msg;
+    					$user = $this->em->getRepository('ProtoBundle:User')->findOneById($message->getFkUser());
+    					$conversations[$key]['conv_id']= $conversation['id'];
+    					$conversations[$key]['conv_link']= $this->generateUrl('proto_messenger', array('id_conv' => $conversation['id']));
+    					$conversations[$key]['conv_title']= $conversation['title'];
+    					$conversations[$key]['conv_color']= $conversation['color'];
+    					$conversations[$key]['sender_name']= $user->getDisplayname();
+    					$conversations[$key]['sender_avatar']= $user->getAvatar();
+    					$conversations[$key]['msg_content']= $message->getContent();
+    					$conversations[$key]['msg_date']= $message->getDatetime()->format('d-m-Y H:i:s');
+    				}
     			}
     		}
     	}
     	
+    	
     	$friends_array = $this->friends->getFriendsList($this->em, $this->session->get('mail'));
-    	foreach ($friends_array as $friend_id){
-    		$friend = $this->em->getRepository('ProtoBundle:User')->findOneById($friend_id);
-    		$friends[$friend_id]['friend_link']=$friend->getId();
-    		$friends[$friend_id]['friend_mail']=$friend->getId();
-    		$friends[$friend_id]['friend_username']=$friend->getUsername();
-    		$friends[$friend_id]['friend_firstname']=$friend->getUserfamilyname();
-    		$friends[$friend_id]['friend_psedo']=$friend->getDisplayname();
-    		$friends[$friend_id]['friend_avatar']=$friend->getAvatar();
+    	if(isset($friends_array)){
+    		foreach ($friends_array as $friend_id){
+    			$friend = $this->em->getRepository('ProtoBundle:User')->findOneById($friend_id);
+    			$friends[$friend_id]['friend_link']=$friend->getId();
+    			$friends[$friend_id]['friend_mail']=$friend->getId();
+    			$friends[$friend_id]['friend_username']=$friend->getUsername();
+    			$friends[$friend_id]['friend_firstname']=$friend->getUserfamilyname();
+    			$friends[$friend_id]['friend_psedo']=$friend->getDisplayname();
+    			$friends[$friend_id]['friend_avatar']=$friend->getAvatar();
+    		}
     	}
-		//print_r($friends);
     	
         return $this->render('ProtoBundle:Home:index.html.twig',
     				array('conversations'=> $conversations, 'friends' => $friends)
     			);
     }
     
-    public function messengerAction($conv_id = 1)
+    public function messengerAction($id_conv)
     {
     	$this->instantiate();
+    	$conversation = $this->em->getRepository('ProtoBundle:Conversation')->findOneById($id_conv);
     	
     	return $this->render('ProtoBundle:Home:chat_test.html.twig',
-    			array('conversations'=> $conv_id, 'user_id'=>$this->session->get('mail'), 'user_psedo'=>$this->session->get('psedo'))
+    			array('conv_id'=> $id_conv, 'conv_title'=>$conversation->getName(), 'user_id'=>$this->session->get('mail'), 'user_psedo'=>$this->session->get('psedo'))
     			);
     }
     

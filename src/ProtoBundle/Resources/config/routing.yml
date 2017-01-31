@@ -3,7 +3,7 @@ proto_homepage:
     defaults: { _controller: ProtoBundle:Home:index }
 
 proto_messenger:
-    path:     /messenger
+    path:     /messenger{id_conv}
     defaults: { _controller: ProtoBundle:Home:messenger }
 
 new_user:
