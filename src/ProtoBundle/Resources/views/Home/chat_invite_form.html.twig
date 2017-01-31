@@ -1,36 +1,16 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{ conv_title }}{% endblock %}
 {% block body %}
-{# include 'Elements/top_bar.html.twig' #}
-<div class="raw" id="chat_container">
-	<div class="row" id="add_contact_conv">
-		<input type="button" id="inviter_boutton" value="Invite" onclick="window.open('{{ friend.friend_invite}}');"/>
-	</div>
-	<div class="col-md-12 row" id="chat_message_container">
-		<div id="conv_header">{{ conv_title }}</div>
-		<div id="chat-list" class="scrollbar row">
-			{% for message in messages %}
-				<div class="{{ message.div_class }}" >
-	        		{{ message.user_psedo}} ({{ message.message_date }}) : {{ message.message_content}} 
-	        	</div>
-    		{% endfor %}
-		</div>
-		<div class="row" id="message_sender">
-			<hr>
-			<textarea id="form-message" placeholder="Your public message here"></textarea><br />
-			<input type="button" id="form-submit" value="Send message"/>
-		</div>
-	</div>
+<div class="raw" id="invite_container">
+	{{ form_start(form) }}
+	{{ form_rest(form) }}
+	{{ form_widget(form) }}
+	{{ form_end(form) }}
+	
+	<input type="text" name="Rechercher">
+	<input type="button" id="form-submit" value="Send message"/>
 </div>
 
-<script>
-var conn = new WebSocket('ws://127.0.0.1:8080/{{ conv_id }}');
-var clientInformation = {
-        user_id: "{{ user_id }}",
-        user_psedo: "{{ user_psedo }}",
-        conv_id: "{{ conv_id }}"
-    };
-</script>
-<script src="{{ asset('js/chat_view.js') }}" type="text/javascript"></script>
+
 <a>{# user_psedo #} </a>
 {% endblock %}

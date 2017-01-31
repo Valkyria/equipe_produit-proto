@@ -13,3 +13,7 @@ new_user:
 push_msg:
     path:     /push_msg:{conv_id}:{user_id}:{message}
     defaults: { _controller: ProtoBundle:Home:push_msg }
+
+add_user_to_conv:
+    path:     /add_user_to_conv
+    defaults: { _controller: ProtoBundle:Home:add_user_to_conv }

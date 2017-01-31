@@ -13,6 +13,10 @@ use ProtoBundle\Entity\Message;
 use ProtoBundle\Entity\Friends;
 use \DateTime;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class HomeController extends Controller
 {
@@ -62,7 +66,7 @@ class HomeController extends Controller
     			$date = new Datetime('1800-01-01 00:00:00');
     			foreach ($messages_get as $message){
     				$date_msg = $message->getDatetime();
-    				if($date_msg > $date){
+    				if($date_msg > $date and $message->getContent() != ''){
     					$date = $date_msg;
     					$user = $this->em->getRepository('ProtoBundle:User')->findOneById($message->getFkUser());
     					$conversations[$key]['conv_id']= $conversation['id'];
@@ -111,9 +115,12 @@ class HomeController extends Controller
     			$psedo = "Me";
     			$div_class ="conv_msg_me";
     		}
-    		$messages[]=array('user_username'=>$user->getUsername(), 'user_firstname'=>$user->getUserfamilyname(), 'user_psedo'=>$psedo, 'user_avatar'=>$user->getAvatar(),
-    							'message_content'=>$message->getContent(),'message_date'=>$message->getDatetime()->format('d/m/Y à H:i:s'), 'div_class'=>$div_class
-    					);
+    		if($message->getContent() != ''){
+    			$messages[]=array('user_username'=>$user->getUsername(), 'user_firstname'=>$user->getUserfamilyname(), 'user_psedo'=>$psedo, 'user_avatar'=>$user->getAvatar(),
+    					'message_content'=>$message->getContent(),'message_date'=>$message->getDatetime()->format('d/m/Y à H:i:s'), 'div_class'=>$div_class
+    			);
+    		}
+    		
     	}
     
     	return $this->render('ProtoBundle:Home:chat_view.html.twig',
@@ -140,13 +147,36 @@ class HomeController extends Controller
     	return new Response ();
     }
     
-    public function add_user_to_convAction($conv_id, $user_friend)
+    public function add_user_to_convAction(Request $request)
     {
     	$this->instantiate();
-    	$this->message->sendMessage($user_friend,$conv_id,'invitation reçue',new DateTime('now'));
-    	$this->em->persist($this->message);
-    	$this->em->flush();
-    	return new Response ();
+    	
+    	$form = $this->createFormBuilder($this->message)
+    		->add('fkConversation', TextType::class)
+    		->add('fkUser', ChoiceType::class, array(
+    				'choices'  => array(
+        				'Maybe' => null,
+        				'Yes' => true,
+        				'No' => false,
+    				),
+    			))
+    		->add('save', SubmitType::class, array('label' => 'Create Post'))
+    		->getForm();
+    	
+    	$form->handleRequest($request);
+    	
+    	if ($form->isSubmitted() && $form->isValid()) {
+    		print_r('hello');
+			$this->message = $form->getData();
+			$this->message->setContent('');
+			$this->em->persist($this->message);
+			$this->em->flush();
+    		
+			return new Response ();
+    	}
+    	return $this->render('ProtoBundle:Home:chat_invite_form.html.twig',
+    			array('conv_title'=> 'test', 'form' => $form->createView())
+    			);
     }
     
     public function user_creationAction()

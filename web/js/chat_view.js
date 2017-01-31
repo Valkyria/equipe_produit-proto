@@ -85,12 +85,5 @@
     	       });
     	}
     };
-    function showInvite(){  
-        //document.cookie = 'MCEvilPopupClosed=;path=/;expires=Thu, 01 Jan 1970 00:00:00 UTC;';  
-        require(["mojo/signup-forms/Loader"], function(L) {  
-            L.start({"baseUrl":"mc.us9.list-manage.com",  
-                "uuid":"CHANGE ME",  
-                "lid":"CHANGE ME"});   
-        });  
-    } 
+    
     
