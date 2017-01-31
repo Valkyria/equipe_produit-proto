@@ -50,6 +50,7 @@
             
             if(user_psedo == clientInformation.user_psedo){
                 from = "me";
+                Msg.registerMsg(clientInformation.conv_id, clientInformation.user_id, clientInformation.message);
             }else{
                 from = user_psedo;
             }
@@ -59,7 +60,10 @@
             var li = document.createElement("li");
             li.appendChild(document.createTextNode(from + " : "+ message));
             ul.appendChild(li);
-            //TODO push to DB
+            
+           
+            
+            
         },
         sendMessage: function(text){
             clientInformation.message = text;
@@ -69,3 +73,19 @@
             this.appendMessage(clientInformation.user_psedo, clientInformation.message);
         }
     };
+    
+    var Msg ={
+    	registerMsg: function (conv_id,user_id,message){
+    		 $.ajax({
+    	          url: "{{ path('push_msg')|escape('js') }}",
+    	          type: "POST",
+    	          data:  {'conv_id': conv_id },
+    	          success: function(data) {
+    	             //(success) do something...
+    	             //variable "data" contains data returned by the controller. 
+    	          }
+    	       });
+    		alert(conv_id + ' ' + user_id + ' ' + message);
+    	}
+    };
+    

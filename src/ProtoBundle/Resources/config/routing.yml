@@ -9,3 +9,7 @@ proto_messenger:
 new_user:
     path:     /new_user
     defaults: { _controller: ProtoBundle:Home:user_creation }
+    
+push_msg:
+    path:     /push_msg{conv_id}{user_id}{message}
+    defaults: { _controller: ProtoBundle:Home:push_msg }

@@ -103,6 +103,13 @@ class HomeController extends Controller
     			);
     }
     
+    public function push_msgAction($conv_id, $user_id, $message)
+    {
+    	$this->message->sendMessage($user_id,$conv_id,$message,Datetime('now'));
+    	$this->em->persist($this->message);
+    	$this->em->flush();
+    }
+    
     public function user_creationAction()
     {
     	$this->instantiate();

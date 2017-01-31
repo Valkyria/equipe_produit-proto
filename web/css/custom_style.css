@@ -80,10 +80,16 @@ code {
 	margin-top:0px
 }
 .user_avatar{
-	max-width: 180px;
-	max-height: 180px;
+	max-width: 160px;
+	max-height: 160px;
 }
 
+li {
+	display: inline;
+	list-style: none; /* pour enlever les puces sur IE7 */
+	margin: 7px;
+	float: right;
+}
 /*______________________________________________________________________________
   _                                                   
  | |                                                  
@@ -105,27 +111,46 @@ ________________________________________________________________________________
 }
 #conv_header{
 	text-align:center;
-	background-color:blue;
 	margin-top:10px;
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #F5F5F5;
+	
 }
 #conv_container{
 	//margin-top:50px;
+	
 }
 #search_bar{
 	//margin-top:100px;
 	text-align:center;
-	background-color:red;
+	background-color:#F5F5F5;
 }
+
+
 #home_container{
 	margin-top:100px;
 }
 #friends_list .row{
 	margin-top:10px;
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #F5F5F5;
 }
 #friends_list img{
 	max-width: 100px;
 	max-height: 100px;
 }
+.scrollbar
+{
+	overflow-y: scroll;
+	overflow-x: hidden;
+  
+}
+
+
+
+
 /*____________________________________________________________________________
    _____ _           _     _____                 
   / ____| |         | |   |  __ \                
