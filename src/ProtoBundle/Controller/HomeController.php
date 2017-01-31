@@ -9,6 +9,7 @@ use ProtoBundle\Entity\Conversation;
 use ProtoBundle\Entity\Message;
 use ProtoBundle\Entity\Friends;
 use \DateTime;
+use Symfony\Component\HttpFoundation\Response;
 
 class HomeController extends Controller
 {
@@ -23,8 +24,8 @@ class HomeController extends Controller
 		$this->session->invalidate();
 		
 		if(!$this->session->isStarted() || !$this->session->get('mail')){
-			//$user = $this->em->getRepository('ProtoBundle:User')->findOneByUsername("Natacha");
-			$user = $this->em->getRepository('ProtoBundle:User')->findOneByUsername("Cedric");
+			$user = $this->em->getRepository('ProtoBundle:User')->findOneByUsername("Natacha");
+			//$user = $this->em->getRepository('ProtoBundle:User')->findOneByUsername("Cedric");
 			$this->session->start();
 			$this->session->set('mail', $user->getId());
 			$this->session->set('lastname', $user->getUserfamilyname());
@@ -96,18 +97,53 @@ class HomeController extends Controller
     public function messengerAction($id_conv)
     {
     	$this->instantiate();
+    	$messages=array();
     	$conversation = $this->em->getRepository('ProtoBundle:Conversation')->findOneById($id_conv);
-    	
+    	$messages_array = $this->em->getRepository('ProtoBundle:Message')->findBy(array('fkConversation' => $id_conv), array('datetime' => 'asc'));
+    	foreach ($messages_array as $message){
+    		$user = $this->em->getRepository('ProtoBundle:User')->findOneById($message->getFkUser());
+    		$psedo = $user->getDisplayname();
+    		$div_class ="conv_msg_other";
+    		if ($user->getId() == $this->session->get('mail')){
+    			$psedo = "Me";
+    			$div_class ="conv_msg_me";
+    		}
+    		$messages[]=array('user_username'=>$user->getUsername(), 'user_firstname'=>$user->getUserfamilyname(), 'user_psedo'=>$psedo, 'user_avatar'=>$user->getAvatar(),
+    							'message_content'=>$message->getContent(),'message_date'=>$message->getDatetime()->format('d/m/Y à H:i:s'), 'div_class'=>$div_class
+    					);
+    	}
+    
     	return $this->render('ProtoBundle:Home:chat_view.html.twig',
-    			array('conv_id'=> $id_conv, 'conv_title'=>$conversation->getName(),'conv_color'=>$conversation->getColor(), 'user_id'=>$this->session->get('mail'), 'user_psedo'=>$this->session->get('psedo'))
-    			);
+    			array('conv_id'=> $id_conv, 'conv_title'=>$conversation->getName(),'conv_color'=>$conversation->getColor(), 
+    					'user_id'=>$this->session->get('mail'), 'user_psedo'=>$this->session->get('psedo'), 'messages'=>$messages
+    			));
     }
     
     public function push_msgAction($conv_id, $user_id, $message)
     {
-    	$this->message->sendMessage($user_id,$conv_id,$message,Datetime('now'));
+    	$this->instantiate();
+    	$this->message->sendMessage($user_id,$conv_id,$message,new DateTime('now'));
     	$this->em->persist($this->message);
     	$this->em->flush();
+    	return new Response ();
+    }
+    
+    public function create_convAction($conv_title, $user_id, $user_friend, $color)
+    {
+    	$this->instantiate();
+    	$this->message->sendMessage($user_id,$conv_id,$message,new DateTime('now'));
+    	$this->em->persist($this->message);
+    	$this->em->flush();
+    	return new Response ();
+    }
+    
+    public function add_user_to_convAction($conv_id, $user_friend)
+    {
+    	$this->instantiate();
+    	$this->message->sendMessage($user_id,$conv_id,$message,new DateTime('now'));
+    	$this->em->persist($this->message);
+    	$this->em->flush();
+    	return new Response ();
     }
     
     public function user_creationAction()

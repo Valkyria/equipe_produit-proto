@@ -57,13 +57,17 @@
             
             // Append List Item
             var ul = document.getElementById("chat-list");
-            var li = document.createElement("li");
-            li.appendChild(document.createTextNode(from + " : "+ message));
-            ul.appendChild(li);
+            var div = document.createElement("div");
+            if(from == "Me"){
+            	div.className = "conv_msg_me";
+            }
+            else{
+            	div.className = "conv_msg_other";
+            }
+            div.appendChild(document.createTextNode(from + " (" + new Date().toLocaleString() + ") : "+ message));
+            ul.appendChild(div);
             
            
-            
-            
         },
         sendMessage: function(text){
             clientInformation.message = text;
@@ -77,15 +81,12 @@
     var Msg ={
     	registerMsg: function (conv_id,user_id,message){
     		 $.ajax({
-    	          url: "{{ path('push_msg')|escape('js') }}",
-    	          type: "POST",
-    	          data:  {'conv_id': conv_id },
+    	          'url': 'push_msg:' +  conv_id + ':' +  user_id + ':' + message,
     	          success: function(data) {
     	             //(success) do something...
     	             //variable "data" contains data returned by the controller. 
     	          }
     	       });
-    		alert(conv_id + ' ' + user_id + ' ' + message);
     	}
     };
     

@@ -1,8 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ conv_title }}{% endblock %}
+{% block body %}
+{# include 'Elements/top_bar.html.twig' #}
+   
 <div class="row" id="home_container">
 	<div class="col-md-12">
 		
 		<div id="conv_header">{{ conv_title }}</div>
-			<ul id="chat-list"></ul>
+			<ul id="chat-list">
+				{% for message in messages %}
+					<div class="{{ message.div_class }}" >
+	        			{{ message.user_psedo}} ({{ message.message_date }}) : {{ message.message_content}} 
+	        		</div>
+    			{% endfor %}
+			</ul>
 		<hr>
 		<textarea id="form-message" placeholder="Your public message here"></textarea>
 		<input type="button" id="form-submit" value="Send message"/>
@@ -19,3 +30,4 @@ var clientInformation = {
 </script>
 <script src="{{ asset('js/chat_view.js') }}" type="text/javascript"></script>
 <a>{# user_psedo #} </a>
+{% endblock %}

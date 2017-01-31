@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% block title %}Conversation home{% endblock %}
 {% block body %}
 	{% include 'Elements/top_bar.html.twig' %}
 	<div class="row" id="home_container">
@@ -13,7 +14,7 @@
 			<div id="friends_list" class="scrollbar" >
 			
 				{% for friend in friends %}
-					<div class="row"  style="cursor: pointer;" onclick="window.open('{{ friend.friend_link}}', '_blank');">
+					<div class="row"  style="cursor: pointer;" onclick="window.open('{{ friend.friend_link}}');">
 	        			<div>
 	        				<div class="col-md-4"><img class="user_avatar" src={{ friend.friend_avatar}} > </div>
 	        				<div class="col-md-8" >
@@ -30,7 +31,7 @@
     	 <div class="col-md-9" id="conv_container" class="scrollbar">
     	 	<h2>Conversations recentes</h2> <hr />
 			{% for conversation in conversations %}
-				<div class="row" style="cursor: pointer;" onclick="window.open('{{ conversation.conv_link}}', '_blank');">
+				<div class="row" style="cursor: pointer;" onclick="window.open('{{ conversation.conv_link}}','{{ conversation.conv_title}}','menubar=no, status=no, scrollbars=no, menubar=no, width=600, height=800');">
 					<div id="conv_header" >{{ conversation.conv_title }}</div>
         			<div>
         				<div class="col-md-2"><img class="user_avatar" src={{ conversation.sender_avatar}} > </div>
