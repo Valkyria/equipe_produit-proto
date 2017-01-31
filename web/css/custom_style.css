@@ -90,6 +90,10 @@ li {
 	margin: 7px;
 	float: right;
 }
+.row {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
 /*______________________________________________________________________________
   _                                                   
  | |                                                  
@@ -365,4 +369,33 @@ ______________________________________________________________________________*/
 }
 .chat_area, .member_list{
 	height: 50%;
+}
+html, body {
+    height: 100%;
+}
+#home_container{
+	margin-top:100px;
+}
+#chat-list{
+	height: 500px;
+    //height: auto !important;
+    //height: 100%;
+    //margin: 0 auto -200px;
+}
+#message_sender.push {
+    height: 200px;
+}
+#add_contact_conv, #message_sender{
+	text-align:center;
+}
+#add_contact_conv input, #message_sender input, #message_sender textarea{
+	margin:auto;
+	width:70%;
+	
+}
+#add_contact_conv input, #message_sender input{
+	margin-top:20px;
+}
+#message_sender hr{
+	margin-top:15px;
 }

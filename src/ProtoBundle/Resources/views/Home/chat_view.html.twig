@@ -2,21 +2,25 @@
 {% block title %}{{ conv_title }}{% endblock %}
 {% block body %}
 {# include 'Elements/top_bar.html.twig' #}
-   
-<div class="row" id="home_container">
-	<div class="col-md-12">
-		
+
+<div class="raw" id="chat_container">
+	<div class="row" id="add_contact_conv">
+		<input type="button" id="inviter_boutton" value="Invite"/>
+	</div>
+	<div class="col-md-12 row" id="chat_message_container">
 		<div id="conv_header">{{ conv_title }}</div>
-			<ul id="chat-list">
-				{% for message in messages %}
-					<div class="{{ message.div_class }}" >
-	        			{{ message.user_psedo}} ({{ message.message_date }}) : {{ message.message_content}} 
-	        		</div>
-    			{% endfor %}
-			</ul>
-		<hr>
-		<textarea id="form-message" placeholder="Your public message here"></textarea>
-		<input type="button" id="form-submit" value="Send message"/>
+		<div id="chat-list" class="scrollbar row">
+			{% for message in messages %}
+				<div class="{{ message.div_class }}" >
+	        		{{ message.user_psedo}} ({{ message.message_date }}) : {{ message.message_content}} 
+	        	</div>
+    		{% endfor %}
+		</div>
+		<div class="row" id="message_sender">
+			<hr>
+			<textarea id="form-message" placeholder="Your public message here"></textarea><br />
+			<input type="button" id="form-submit" value="Send message"/>
+		</div>
 	</div>
 </div>
 

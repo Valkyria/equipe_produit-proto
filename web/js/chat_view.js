@@ -1,8 +1,4 @@
  // This object will be sent everytime you submit a message in the sendMessage function.
-    /*var clientInformation = {
-        user_psedo: new Date().getTime().toString()
-        // You can add more information in a static object
-    };*/
     
     // START SOCKET CONFIG
     /**
@@ -10,7 +6,6 @@
      * According to the configuration in Sockets/Chat.php , change the port if you need to.
      * @type WebSocket
      */
-    //var conn = new WebSocket('ws://127.0.0.1:8080/2');
 
     conn.onopen = function(e) {
         console.info("Connection established succesfully");
@@ -43,7 +38,7 @@
         document.getElementById("form-message").value = "";
     }, false);
     
-    // Mini API to send a message with the socket and append a message in a UL element.
+    // Mini API to send a message with the socket and append a message in a chat-list element.
     var Chat = {
         appendMessage: function(user_psedo,message){
             var from;
@@ -56,7 +51,7 @@
             }
             
             // Append List Item
-            var ul = document.getElementById("chat-list");
+            var msg_content = document.getElementById("chat-list");
             var div = document.createElement("div");
             if(from == "Me"){
             	div.className = "conv_msg_me";
@@ -65,7 +60,8 @@
             	div.className = "conv_msg_other";
             }
             div.appendChild(document.createTextNode(from + " (" + new Date().toLocaleString() + ") : "+ message));
-            ul.appendChild(div);
+            msg_content.appendChild(div);
+            msg_content.scrollTop = msg_content.scrollHeight;
             
            
         },
